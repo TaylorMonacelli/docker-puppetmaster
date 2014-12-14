@@ -1,9 +1,9 @@
 #!/bin/bash -e
 
-sudo python -c 'import ConfigParser;conf="/etc/puppet/puppet.conf";c=ConfigParser.ConfigParser();c.read(conf);c.has_option("main","manifest") and c.remove_option("main","manifest");c.set("main","server","docker.streambox.com");c.set("main","certname","docker.streambox.com");cfgfile=open(conf, "wb");c.write(cfgfile);cfgfile.close();'
-
 sudo /etc/init.d/puppetmaster stop
 sudo /etc/init.d/puppetmaster start
+
+sudo python -c 'import ConfigParser;conf="/etc/puppet/puppet.conf";c=ConfigParser.ConfigParser();c.read(conf);c.has_option("main","manifest") and c.remove_option("main","manifest");c.set("main","server","docker.streambox.com");c.set("main","certname","docker.streambox.com");cfgfile=open(conf, "wb");c.write(cfgfile);cfgfile.close();'
 
 sudo puppet cert sign --all
 sudo puppet cert clean --all
