@@ -60,6 +60,14 @@ RUN chmod +x /sbin/run-puppet-agent
 ADD scripts/nginx-startup.sh /etc/service/nginx/run
 RUN chmod +x /etc/service/nginx/run
 
+# Install python to update INI, perhaps Aegeus would be better
+RUN apt-get update -q 2 && DEBIAN_FRONTEND=noninteractive \
+    apt-get install -y python > /dev/null
+
+ADD scripts/final_puppet_setup_workaround.sh /etc/my_init.d/
+RUN chmod +x /etc/my_init.d/*
+RUN sh /etc/my_init.d/final_puppet_setup_workaround.sh
+
 # Expose Puppet Master port
 EXPOSE 8140
 
