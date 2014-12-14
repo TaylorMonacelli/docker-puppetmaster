@@ -12,6 +12,11 @@ RUN ln -s -f /bin/true /usr/bin/chfn
 RUN apt-get update -q 2 && DEBIAN_FRONTEND=noninteractive \
     apt-get install -y apt-transport-https ca-certificates > /dev/null
 
+# Install taylor's tools
+RUN apt-get update -q 2 && DEBIAN_FRONTEND=noninteractive \
+    apt-get install -y emacs > /dev/null
+RUN curl https://raw.githubusercontent.com/TaylorMonacelli/ubuntu_taylor/master/setup.sh | sh -
+
 # Install Phusion Passenger Repository for Passenger/NGINX
 ADD conf/apt/passenger.list /etc/apt/sources.list.d/
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 \
